@@ -7,7 +7,7 @@ public class Main {
     private String name;
     private String lastName;
     private String email;
-    private int cell;
+    private long cell;
 
     private Options cmlOptions ;
     private CommandLineParser parser ;
@@ -38,11 +38,11 @@ public class Main {
     }
 
     public  String getEmail(){ return this.email;}
-    private void setCell( int cellNo){
+    private void setCell( long cellNo){
       this.cell = cellNo;
     }
 
-    public int getCell(){ return this.cell;}
+    public long getCell(){ return this.cell;}
 
     public  void configure( String[] args)
     {
@@ -65,35 +65,35 @@ public class Main {
         {
             helpFormatter.printHelp("User Profile Info", this.cmlOptions);
         }
-        if( cmlArgs != null) {
-            setName(this.cmlArgs.getOptionValue(nameOption));
-            setLastName(this.cmlArgs.getOptionValue("lastname"));
-            setEmail(this.cmlArgs.getOptionValue("e"));
-            if( this.cmlArgs.hasOption("c")){
-                setCell( Integer.parseInt(this.cmlArgs.getOptionValue("c")));
-            }else{
-                setCell(0);
-            }
+
+        setName(this.cmlArgs.getOptionValue(nameOption));
+        setLastName(this.cmlArgs.getOptionValue("lastname"));
+        setEmail(this.cmlArgs.getOptionValue("e"));
+        if( this.cmlArgs.hasOption("c")){
+            setCell( Long.parseLong(this.cmlArgs.getOptionValue("c")));
+        }else{
+            setCell(0);
         }
+
 
     }
 
     public void displayUserInfo(){
         System.out.println("-".repeat(5)+"USER PROFILE INFORMATION"+"-".repeat(5));
         System.out.println("_".repeat(34));
-        System.out.printf("Name: %28s", getName());
-        System.out.printf("LastName: %24s",getLastName());
-        System.out.printf("Email Address: %19s", getEmail());
+        System.out.printf("Name: %28s\n", getName());
+        System.out.printf("LastName: %24s\n",getLastName());
+        System.out.printf("Email Address: %19s\n", getEmail());
         if( this.cell != 0)
-            System.out.printf("Cell No: %25d", getCell());
+            System.out.printf("Cell No: %25s\n","+" + getCell());
         else
-            System.out.printf("Cell No: %25s", "N/A");
+            System.out.printf("Cell No: %25s\n", "N/A");
     }
     public static void main(String[] args) {
 
         Main main;
         if(args.length !=0) main = new Main( args);
-        else main = new Main( new String[]{"-n Thereso --lastname Phele -e thereso199@gmail.com -cell +27765641019"});
+        else main = new Main( new String[]{"-n", "Thereso", "--lastname", "Phele", "-e", "thereso199@gmail.com", "--cell", "27765641019"});
 
         main.displayUserInfo();
     }
